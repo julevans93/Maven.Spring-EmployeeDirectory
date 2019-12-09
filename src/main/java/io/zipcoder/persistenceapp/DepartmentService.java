@@ -1,25 +1,24 @@
 package io.zipcoder.persistenceapp;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
 @Service
-@RestController
 public class DepartmentService {
+    private DepartmentRepository departmentRepository;
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    public DepartmentService(DepartmentRepository repository){
+        this.departmentRepository = repository;
+    }
 
-    @PostMapping("/API")
-    public ResponseEntity<Department> createDepartment(@RequestBody Department department){
-        this.jdbcTemplate.execute("INSERT INTO DEPARTMENT (DEPARTMENT_NUMBER, DEPARTMENT_NAME, DEPARTMENT_MANAGER)" +
-                "VALUES ('"+department.getDepartmentNumber()+"', '"+department.getDepartmentName()+"', '"+department.getDepartmentManager()+"';)");
-        return new ResponseEntity<>(HttpStatus.OK);
+    public Department create(Department department){
+        return departmentRepository.save(department);
+    }
+
+    public Department update(Integer id, Department newDepartmentData){
+        Department originalDepartment = departmentRepository.findOne(id);
+        originalDepartment.setDepartmentManager(newDepartmentData.getDepartmentManager());
+        originalDepartment.setDepartmentName(newDepartmentData.getDepartmentName());
+        return departmentRepository.save(originalDepartment);
     }
 }

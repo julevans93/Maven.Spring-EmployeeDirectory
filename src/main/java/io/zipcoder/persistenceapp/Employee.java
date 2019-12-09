@@ -1,74 +1,83 @@
 package io.zipcoder.persistenceapp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "EMPLOYEE_TABLE")
 public class Employee {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-    private String employeeNumber;
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
-    private String email;
-    private Date hireDate;
-    private String manager;
-    private Integer departmentNumber;
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    @Column(name = "EMPLOYEE_ID")
+    private Long employeeId;
 
-    public Employee(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
+    @Column(name = "FIRST_NAME")
+    private String firstName;
+
+    @Column(name = "LAST_NAME")
+    private String lastName;
+
+    @Column(name = "TITLE")
+    private String title;
+
+    @Column(name = "PHONE_NUMBER")
+    private String phoneNumber;
+
+    @Column(name = "EMAIL")
+    private String email;
+
+    @Column(name = "HIRE_DATE")
+    private String hireDate;
+
+    @Column(name = "MANAGER")
+    @Transient
+    private Employee manager;
+
+    @Column(name = "DEPARTMENT_KEY")
+    private Integer departmentId;
 
     public Employee(){
 
     }
 
-
-    public Integer getId() {
-        return id;
+    public Long getEmployeeId() {
+        return employeeId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getEmployeeNumber() {
-        return employeeNumber;
-    }
-
-    public void setEmployeeNumber(String employeeNumber) {
-        this.employeeNumber = employeeNumber;
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstName(String first_name) {
+        this.firstName = first_name;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastName(String last_name) {
+        this.lastName = last_name;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhoneNumber(String phone_number) {
+        this.phoneNumber = phone_number;
     }
 
     public String getEmail() {
@@ -79,27 +88,27 @@ public class Employee {
         this.email = email;
     }
 
-    public Date getHireDate() {
+    public String getHireDate() {
         return hireDate;
     }
 
-    public void setHireDate(Date hireDate) {
-        this.hireDate = hireDate;
+    public void setHireDate(String hire_date) {
+        this.hireDate = hire_date;
     }
 
-    public String getManager() {
+    public Employee getManager() {
         return manager;
     }
 
-    public void setManager(String manager) {
+    public void setManager(Employee manager) {
         this.manager = manager;
     }
 
-    public Integer getDepartmentNumber() {
-        return departmentNumber;
+    public Integer getDepartmentId() {
+        return departmentId;
     }
 
-    public void setDepartmentNumber(Integer departmentNumber) {
-        this.departmentNumber = departmentNumber;
+    public void setDepartmentId(Integer department_Key) {
+        this.departmentId = department_Key;
     }
 }
